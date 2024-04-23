@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+    <title>treemap</title>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Script-Type" content="text/javascript">
+    <meta http-equiv="Content-Style-Type" content="text/css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="http://www.mins01.com/favicon.ico"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="/js/ForGoogle.js"></script>
+    <!-- google analytics -->
+    <script>if(window.ForGoogle){ ForGoogle.analytics() }else{ console.log("failure : ForGoogle.analytics()");}</script>
+    
+
+    <!-- jquery 관련 -->
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+
+    <!-- 부트스트랩 5.3.x -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- vue.js -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+    <!-- meta og -->
+    
+    <meta property="og:title" content="treemap">
+    <meta property="og:description" content="treemap">
+    <meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+    <meta property="og:image:width" content="190">
+    <meta property="og:image:height" content="70" />
+    <meta property="og:site_name" content="treemap" />
+    <meta property="og:type" content="website">
+    
+    <!-- //meta og -->
+    
+    <link rel="stylesheet" href="treemap.css">
+    <script src="Treemap.js"></script>
+    <script>
+        const treemap = new Treemap();
+        window.addEventListener('load',(event)=>{
+            treemap.sync(document.querySelector('#test-1'));
+            treemap.sync(document.querySelector('#test-2'));
+
+            reSyncTest3()
+            reSyncTest4()
+
+            // <div class="treemap-item" data-val="100">100</div>
+        })
+
+        function reSyncTest3(){
+            let el_treemap_items = document.querySelector('#test-3 .treemap-items')
+            for(let i=0,m=12;i<m;i++){
+                let val = Math.random()*12+1;
+                let div = document.createElement('div');
+                div.classList.add('treemap-item');
+                div.dataset.val = val;
+                div.innerText = `[${i}]${val.toFixed(2)}`
+                el_treemap_items.append(div);
+            }
+            treemap.sync(document.querySelector('#test-3'));
+        }
+        function reSyncTest4(){
+            let el_treemap_items = document.querySelector('#test-4 .treemap-items')
+            let divs = [];
+            for(let i=0,m=12;i<m;i++){
+                let val = Math.random()*Math.pow(i,2)+1;
+                let div = document.createElement('div');
+                div.classList.add('treemap-item');
+                div.dataset.val = val;
+                div.innerText = `[${i}]${val.toFixed(2)}`
+                divs.push(div);
+                
+            }
+            divs.sort((a,b)=>{
+                return parseFloat(b.dataset.val) - parseFloat(a.dataset.val);
+            })
+            divs.forEach(div=>{
+                el_treemap_items.append(div);
+            })
+            treemap.sync(document.querySelector('#test-4'));
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>treemap</h1>
+        <div class="m-3">
+            <h3>수동으로 그리기</h3>
+            <div class="treemap-wrap">
+                <div class="treemap" style="width: 100%; height: 400px;--total:100;">
+                    <div class="treemap-g treemap-g-row" style="--vi:50;">
+                        <div class="treemap-b treemap-b-item">
+                            <div class="treemap-item" data-val="50">50</div>
+                        </div>
+                        <div class="treemap-b treemap-b-other">
+                            <div class="treemap-g treemap-g-column" style="--vi:25;">
+                                <div class="treemap-b treemap-b-item">
+                                    <div class="treemap-item" data-val="25">25</div>
+                                </div>
+                                <div class="treemap-b treemap-b-other">
+                                    <div class="treemap-g  treemap-g-row" style="--vi:12.5;">
+                                        <div class="treemap-b treemap-b-item">
+                                            <div class="treemap-item" data-val="12.5">12.5</div>
+                                        </div>
+                                        <div class="treemap-b treemap-b-other">
+                                            <div class="treemap-g  treemap-g-column" style="--vi:6.25;">
+                                                <div class="treemap-b treemap-b-item">
+                                                    <div class="treemap-item" data-val="6.25">6.25</div>
+                                                </div>
+                                                <div class="treemap-b treemap-b-other">
+                                                    <div class="treemap-item" data-val="6.25">6.25</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>수등으로 그리기: 2</h3>
+            <div class="treemap-wrap">
+                <div class="treemap mx-auto" style="width: 400px; height: 400px;--total:149;">
+                    <div class="treemap-g treemap-g-row">
+                        <div class="treemap-b treemap-b-item">
+                            <div class="treemap-item" data-val="100">100</div>
+                        </div>
+                        <div class="treemap-b treemap-b-other">
+                            <div class="treemap-g treemap-g-column" style="--vi:34;">
+                                <div class="treemap-b treemap-b-item">
+                                    <div class="treemap-item" data-val="34">34</div>
+                                </div>
+                                <div class="treemap-b treemap-b-other">
+                                    <div class="treemap-g  treemap-g-row" style="--vi:10;">
+                                        <div class="treemap-b treemap-b-item">
+                                            <div class="treemap-item" data-val="10">10</div>
+                                        </div>
+                                        <div class="treemap-b treemap-b-other">
+                                            <div class="treemap-g  treemap-g-column" style="--vi:3;">
+                                                <div class="treemap-b treemap-b-item">
+                                                    <div class="treemap-item" data-val="3">3</div>
+                                                </div>
+                                                <div class="treemap-b treemap-b-other">
+                                                    <div class="treemap-item" data-val="2">2</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>자동으로 그리기:소팅 없는 데이터</h3>
+            <div class="treemap-wrap" id="test-1">
+                <div class="treemap" style="width: 300px; height: 300px; font-size: 10px;">
+                    
+                </div>
+                <div class="treemap-items">
+                    <div class="treemap-item" data-val="70">50</div>
+                    <div class="treemap-item" data-val="20">20</div>
+                    <div class="treemap-item" data-val="50">50</div>
+                    <div class="treemap-item" data-val="30">30</div>
+                    <div class="treemap-item" data-val="100">100</div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>자동으로 그리기:소팅 된 데이터</h3>
+            <div class="treemap-wrap" id="test-2">
+                <div class="treemap" style="width: 300px; height: 300px; font-size: 10px;">
+                    
+                </div>
+                <div class="treemap-items">
+                    <div class="treemap-item" data-val="100">100</div>
+                    <div class="treemap-item" data-val="70">50</div>
+                    <div class="treemap-item" data-val="50">50</div>
+                    <div class="treemap-item" data-val="30">30</div>
+                    <div class="treemap-item" data-val="20">20</div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>자동으로 그리기:랜덤 요소 <button type="button" class="btn btn-primary" onclick="reSyncTest3()">다시그리기</button></h3>
+            <div class="treemap-wrap" id="test-3">
+                <div class="treemap" style="width: 300px; height: 300px; font-size: 10px;">
+                    
+                </div>
+                <div class="treemap-items">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>자동으로 그리기:랜덤 요소 소팅<button type="button" class="btn btn-primary" onclick="reSyncTest4()">다시그리기</button></h3>
+            <div class="treemap-wrap" id="test-4">
+                <div class="treemap" style="width: 300px; height: 300px; font-size: 10px;">
+                    
+                </div>
+                <div class="treemap-items">
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+<div class="treemap-g">
+    <div class="treemap-b" style="--p:calc(25 / 50 * 100%);">
+
+    </div>
+    <div class="treemap-b" style="--p:calc((100 - 50) / 100 * 100%);">
+        
+    </div>
+</div>

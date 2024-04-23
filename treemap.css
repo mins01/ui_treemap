@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+.treemap-wrap{
+    --total:100;
+    --sum:100;
+    --vi:100;
+}
+.treemap , .treemap-g , .treemap-b{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: stretch;
+}
+.treemap{  
+    --sum:var(--total);
+    --v:var(--sum);
+}
+.treemap-g{
+    --sum:var(--v);
+    flex: 1 0 100%;
+}
+.treemap-g-row{
+    flex-direction: row;
+}
+.treemap-g-column{
+    flex-direction: column;
+}
+.treemap-b{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.treemap-b-item{
+    --v:var(--vi);
+    flex: 0 0 calc(var(--v) / var(--sum) * 100%);
+}
+.treemap-b-other{
+    --v:calc(var(--sum) - var(--vi) );
+    flex: 1 1 0;
+}
+.treemap-b-other:empty{
+    display: none;
+}
+.treemap-items{
+    display: none;
+}
+.treemap-item{
+    width: 100%;
+    height: 100%;;
+    background-color: #aabbcc99;
+    outline: 1px solid #00000099;
+    text-align: center;
+    outline-offset: -1px;
+    word-break: break-all;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+색상
+*/
+.treemap-b-item.nth-0 .treemap-item{background: #ff0029;}
+.treemap-b-item.nth-1 .treemap-item{background: #377eb8;}
+.treemap-b-item.nth-2 .treemap-item{background: #66a61e;}
+.treemap-b-item.nth-3 .treemap-item{background: #984ea3;}
+.treemap-b-item.nth-4 .treemap-item{background: #00d2d5;}
+.treemap-b-item.nth-5 .treemap-item{background: #ff7f00;}
+.treemap-b-item.nth-6 .treemap-item{background: #af8d00;}
+.treemap-b-item.nth-7 .treemap-item{background: #7f80cd;}
+.treemap-b-item.nth-8 .treemap-item{background: #b3e900;}
+.treemap-b-item.nth-9 .treemap-item{background: #c42e60;}
+
+
+
+
+
+
+
+
+
