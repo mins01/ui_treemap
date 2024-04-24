@@ -53,6 +53,7 @@
 
         function reSyncTest3(){
             let el_treemap_items = document.querySelector('#test-3 .treemap-items')
+            el_treemap_items.innerHTML = '';
             for(let i=0,m=12;i<m;i++){
                 let val = Math.random()*12+1;
                 let div = document.createElement('div');
@@ -63,8 +64,9 @@
             }
             treemap.sync(document.querySelector('#test-3'));
         }
-        function reSyncTest4(){
+        function reSyncTest4(option){
             let el_treemap_items = document.querySelector('#test-4 .treemap-items')
+            el_treemap_items.innerHTML = '';
             let divs = [];
             for(let i=0,m=12;i<m;i++){
                 let val = Math.random()*Math.pow(i,2)+1;
@@ -81,9 +83,31 @@
             divs.forEach(div=>{
                 el_treemap_items.append(div);
             })
-            treemap.sync(document.querySelector('#test-4'));
+            treemap.sync(document.querySelector('#test-4'),option);
         }
     </script>
+    <style>
+        .treemap-custom .treemap-g{
+            gap: 2px;
+        }
+        .treemap-custom .treemap-b{
+            overflow: visible;
+            position: relative;
+        }
+        .treemap-custom .treemap-item{
+            border-radius: 100%;
+            transform: scale(1.1);
+            box-shadow: 0 5px 5px #00000099;
+        }
+        .treemap-custom .treemap-b:hover{
+            z-index: 10;
+        }
+        .treemap-custom .treemap-b:hover > .treemap-item{
+            transition: all 0.5s ease ;
+            transform: scale(1.2) translateY(-10%);
+            filter: brightness(1.2);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -125,9 +149,117 @@
             </div>
         </div>
         <div class="m-3">
-            <h3>수등으로 그리기: 2</h3>
+            <h3>수동으로 그리기: 2</h3>
             <div class="treemap-wrap">
-                <div class="treemap mx-auto" style="width: 400px; height: 400px;--total:149;">
+                <div class="treemap mx-auto" style="width: 400px; height: 200px;--total:149;">
+                    <div class="treemap-g treemap-g-row">
+                        <div class="treemap-b treemap-b-item">
+                            <div class="treemap-item" data-val="100">100</div>
+                        </div>
+                        <div class="treemap-b treemap-b-other">
+                            <div class="treemap-g treemap-g-column" style="--vi:34;">
+                                <div class="treemap-b treemap-b-item">
+                                    <div class="treemap-item" data-val="34">34</div>
+                                </div>
+                                <div class="treemap-b treemap-b-other">
+                                    <div class="treemap-g  treemap-g-row" style="--vi:10;">
+                                        <div class="treemap-b treemap-b-item">
+                                            <div class="treemap-item" data-val="10">10</div>
+                                        </div>
+                                        <div class="treemap-b treemap-b-other">
+                                            <div class="treemap-g  treemap-g-column" style="--vi:3;">
+                                                <div class="treemap-b treemap-b-item">
+                                                    <div class="treemap-item" data-val="3">3</div>
+                                                </div>
+                                                <div class="treemap-b treemap-b-other">
+                                                    <div class="treemap-item" data-val="2">2</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>수동으로 그리기: 2 - .treemap-dir-only-row</h3>
+            <div class="treemap-wrap">
+                <div class="treemap treemap-dir-only-row mx-auto" style="width: 400px; height: 200px;--total:149;">
+                    <div class="treemap-g treemap-g-row">
+                        <div class="treemap-b treemap-b-item">
+                            <div class="treemap-item" data-val="100">100</div>
+                        </div>
+                        <div class="treemap-b treemap-b-other">
+                            <div class="treemap-g treemap-g-column" style="--vi:34;">
+                                <div class="treemap-b treemap-b-item">
+                                    <div class="treemap-item" data-val="34">34</div>
+                                </div>
+                                <div class="treemap-b treemap-b-other">
+                                    <div class="treemap-g  treemap-g-row" style="--vi:10;">
+                                        <div class="treemap-b treemap-b-item">
+                                            <div class="treemap-item" data-val="10">10</div>
+                                        </div>
+                                        <div class="treemap-b treemap-b-other">
+                                            <div class="treemap-g  treemap-g-column" style="--vi:3;">
+                                                <div class="treemap-b treemap-b-item">
+                                                    <div class="treemap-item" data-val="3">3</div>
+                                                </div>
+                                                <div class="treemap-b treemap-b-other">
+                                                    <div class="treemap-item" data-val="2">2</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>수동으로 그리기: 2 - .treemap-dir-only-column</h3>
+            <div class="treemap-wrap">
+                <div class="treemap treemap-dir-only-column mx-auto" style="width: 400px; height: 200px;--total:149;">
+                    <div class="treemap-g treemap-g-row">
+                        <div class="treemap-b treemap-b-item">
+                            <div class="treemap-item" data-val="100">100</div>
+                        </div>
+                        <div class="treemap-b treemap-b-other">
+                            <div class="treemap-g treemap-g-column" style="--vi:34;">
+                                <div class="treemap-b treemap-b-item">
+                                    <div class="treemap-item" data-val="34">34</div>
+                                </div>
+                                <div class="treemap-b treemap-b-other">
+                                    <div class="treemap-g  treemap-g-row" style="--vi:10;">
+                                        <div class="treemap-b treemap-b-item">
+                                            <div class="treemap-item" data-val="10">10</div>
+                                        </div>
+                                        <div class="treemap-b treemap-b-other">
+                                            <div class="treemap-g  treemap-g-column" style="--vi:3;">
+                                                <div class="treemap-b treemap-b-item">
+                                                    <div class="treemap-item" data-val="3">3</div>
+                                                </div>
+                                                <div class="treemap-b treemap-b-other">
+                                                    <div class="treemap-item" data-val="2">2</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="m-3">
+            <h3>수동으로 그리기: 2 - 스타일 커스텀</h3>
+            <div class="treemap-wrap">
+                <div class="treemap treemap-custom  mx-auto" style="width: 400px; height: 200px;--total:149;">
                     <div class="treemap-g treemap-g-row">
                         <div class="treemap-b treemap-b-item">
                             <div class="treemap-item" data-val="100">100</div>
@@ -202,7 +334,12 @@
             </div>
         </div>
         <div class="m-3">
-            <h3>자동으로 그리기:랜덤 요소 소팅<button type="button" class="btn btn-primary" onclick="reSyncTest4()">다시그리기</button></h3>
+            <h3>자동으로 그리기:랜덤 요소 소팅+랜덤 설정</h3>
+            <div class="my-1">
+                <button type="button" class="btn btn-primary" onclick="reSyncTest4({startDir:Math.floor(Math.random()*2),ratioDir:(Math.random()*0.8)+0.1})">다시그리기-설정 랜덤</button>
+                <button type="button" class="btn btn-primary" onclick="reSyncTest4({startDir:Math.floor(Math.random()*2),ratioDir:0})">다시그리기-방향 랜덤, 교차 방향</button>
+                <button type="button" class="btn btn-primary" onclick="reSyncTest4({startDir:Math.floor(Math.random()*2),ratioDir:1})">다시그리기-방향 랜덤, 한방향</button>
+            </div>
             <div class="treemap-wrap" id="test-4">
                 <div class="treemap" style="width: 300px; height: 300px; font-size: 10px;">
                     

@@ -21,18 +21,26 @@
     --sum:var(--v);
     flex: 1 0 100%;
 }
-.treemap-g-row{
+.treemap-g-row ,
+.treemap-g-dir-0{
     flex-direction: row;
 }
-.treemap-g-column{
+.treemap-g-column ,
+.treemap-g-dir-1{
+    flex-direction: column;
+}
+.treemap-dir-only-row .treemap-g {
+    flex-direction: row;
+}
+.treemap-dir-only-column .treemap-g {
     flex-direction: column;
 }
 .treemap-b{
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 .treemap-b-item{
     --v:var(--vi);
+    /* flex: 0 0 calc(var(--v) / var(--sum) * 100%); */
     flex: 0 0 calc(var(--v) / var(--sum) * 100%);
 }
 .treemap-b-other{
@@ -46,10 +54,11 @@
     display: none;
 }
 .treemap-item{
+
     width: 100%;
     height: 100%;;
-    background-color: #aabbcc99;
-    outline: 1px solid #00000099;
+    background-color: #aabbcc;
+    outline: 1px solid #333333;
     text-align: center;
     outline-offset: -1px;
     word-break: break-all;
